@@ -1,0 +1,33 @@
+###############################################################################################
+####################### data used for fiting in this script are provided in separate .txt files
+# Two cell model
+T0=7e9
+rt=0.9
+MiceTwoTargetCells=args(name='Tropism_model',
+                    varspecs={'Td':'-beta26*Td*V',
+                              'Ts':'-beta23*Ts*V',
+                              'Ed':'beta26*Td*V-k*Ed',
+                              'Es':'beta23*Ts*V-k*Es',
+                              'Id':'k*Ed-delta*Id',
+                              'Is':'k*Es-delta*Is',
+                              'V':'p26*Id+p23*Is-c*V'
+                             },
+                    pars={'k':0.23809523809523808,
+                          'beta26':1e-5/24.0,
+                          'beta23':1e-5/24.0,
+                          'delta':0.3448275862068966,
+                          'c':0.3448275862068966,
+                          'p26':0.00833333333,
+                          'p23':0.00833333333
+                         },
+                    ics={'Td':(1-rt)*T0,
+                         'Ts':rt*T0,
+                         'Id':0.0,
+                         'Is':0.0,
+                         'Ed':0.0,
+                         'Es':0.0,
+                         'V':7.6e-2
+                        },
+                        tdata=[0,24.0*10]
+                   )
+MiceTwoTargetCellsDS=Generator.Vode_ODEsystem(MiceTwoTargetCells)
