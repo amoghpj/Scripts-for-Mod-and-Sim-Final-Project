@@ -2,6 +2,52 @@ import numpy as np
 import matplotlib.pyplot as plt
 from tqdm import tqdm
 import pandas as pd
+
+
+#######################################################################################################################################################
+## Function definitions for 2 cell model
+def heatmap_generator(grid,grid_dim):
+    hm=[]
+    row=[]
+    for i in range(0,grid_dim):
+        row=[]
+        for j in range(0,grid_dim):
+            if grid[i][j]=='Td':
+                row.append(1.0)
+            elif grid[i][j]=='Ed':
+                row.append(3.0)
+            elif grid[i][j]=='Id':
+                row.append(5.0)
+            elif grid[i][j]=='D':
+                row.append(0.0)
+            if grid[i][j]=='Ts':
+                row.append(2.0)
+            elif grid[i][j]=='Es':
+                row.append(4.0)
+            elif grid[i][j]=='Is':
+                row.append(6.0)
+        hm.append(row)
+    return hm
+
+def celltype_counter(gridval,grid,grid_dim):
+    counter=0
+    for i in range(0,grid_dim):
+        for j in range(0,grid_dim):
+            if grid[i][j]==gridval:
+                counter=counter+1
+    return counter
+
+def viral_influence(x,y,grid,grid_dim):
+    total_virus=0
+    if x>1 and x<grid_dim-3 and y>1 and y< grid_dim-3:
+#         total_virus=grid[x-1][y-1]+grid[x][y-1]+grid[x][y]+grid[x][y+1]+grid[x+1][y]+grid[x+1][y+1]
+        total_virus=grid[x-1][y-1]+grid[x-1][y]+grid[x-1][y+1]+grid[x][y-1]+grid[x][y]+grid[x][y+1]+grid[x+1][y-1]+grid[x+1][y]+grid[x+1][y+1]
+    return total_virus            
+#######################################################################################################################################################
+
+
+
+
 ############### LOAD GRID
 ####### Add string of grid file name here
 Grid_file_name='GRID_1clusters_0.5-2.txt'
